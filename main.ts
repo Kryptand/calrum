@@ -1,11 +1,12 @@
-import { LitElement, html, property, customElement } from "lit-element";
-
+import { LitElement, html, customElement, TemplateResult } from "lit-element";
+import "./src/skeleton/skeleton";
 @customElement("calrum-root")
-export class CalrumRoot extends LitElement {
-    
-  protected render() {
+export class CalrumRootComponent extends LitElement {
+  protected render(): TemplateResult {
     return html`
-      <h1>Hello Calrum</h1>
+      <calrum-skeleton>
+        <div slot="content">Hello its me</div>
+      </calrum-skeleton>
     `;
   }
 }
