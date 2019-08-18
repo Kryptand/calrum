@@ -8,8 +8,8 @@ import {
 import "@polymer/iron-icons/iron-icons";
 import "@polymer/iron-icon/iron-icon";
 
-@customElement("calrum-navbar")
-export class NavbarComponent extends LitElement {
+@customElement("calrum-home")
+export class NotFoundComponent extends LitElement {
   static styles = css`
     :host {
       width: var(--calrum-navbar-width);
@@ -29,15 +29,8 @@ export class NavbarComponent extends LitElement {
   `;
   protected render(): TemplateResult {
     return html`
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:date-range"></iron-icon
-      ></a>
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:view-list"></iron-icon>
-      </a>
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:view-module"></iron-icon>
-      </a>
+      <h1>Home</h1>
+      The pathname was: ${window.location.pathname}
     `;
   }
 }
