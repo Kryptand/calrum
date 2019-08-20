@@ -9,8 +9,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "typeRoots": [ "@types","node_modules/@types"]
   },
-  "include": ["src/**/*.ts","+state/**/*.ts","main.ts"],
+  "include": ["src/**/*.ts","+state/**/*.ts","main.ts","config/**/*","@types/**/*"],
   "exclude": []
 }

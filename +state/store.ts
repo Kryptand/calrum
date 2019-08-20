@@ -44,8 +44,8 @@ export const store = createStore(
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)
   )
 );
-
+const appReducer=app as any;
 // Initially loaded reducers.
 store.addReducers({
-  app
+  app:appReducer
 });

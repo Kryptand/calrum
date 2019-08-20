@@ -3,13 +3,24 @@ import {
   html,
   customElement,
   css,
-  TemplateResult
+  TemplateResult,
+  property
 } from "lit-element";
 import "@polymer/iron-icons/iron-icons";
 import "@polymer/iron-icon/iron-icon";
+import { connect } from "pwa-helpers/connect-mixin";
+import { store, RootState } from "../../+state/store";
+import { Routes } from "../../config/routes";
+
+const isCurrentPage: any=(location:string,currentLocation:string)=>{
+  return location===currentLocation;
+}
+
 
 @customElement("calrum-navbar")
-export class NavbarComponent extends LitElement {
+export class NavbarComponent extends connect(store)(LitElement){ 
+  @property({ type: String })
+  page = "";
   static styles = css`
     :host {
       width: var(--calrum-navbar-width);
@@ -27,16 +38,19 @@ export class NavbarComponent extends LitElement {
       color: var(--calrum-primary-contrast);
     }
   `;
+  stateChanged(state: RootState) {
+    this.page = state.app!.page;
+  }
   protected render(): TemplateResult {
     return html`
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:date-range"></iron-icon
+      <a href="/${Routes.Home}">
+        <iron-icon class="navbar-icon ${isCurrentPage(this.page,Routes.Home)?'active':''}"  icon="icons:date-range"></iron-icon
       ></a>
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:view-list"></iron-icon>
+      <a href="/${Routes.Week}">
+        <iron-icon class="navbar-icon  ${isCurrentPage(this.page,Routes.Week)?'active':''}" icon="icons:view-list"></iron-icon>
       </a>
-      <a href="#">
-        <iron-icon class="navbar-icon" icon="icons:view-module"></iron-icon>
+      <a href="/${Routes.Month}">
+        <iron-icon class="navbar-icon  ${isCurrentPage(this.page,Routes.Month)?'active':''}" icon="icons:view-module"></iron-icon>
       </a>
     `;
   }
