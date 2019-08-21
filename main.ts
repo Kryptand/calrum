@@ -6,7 +6,8 @@ import {
   LitElement,
   property,
   PropertyValues,
-  TemplateResult
+  TemplateResult,
+  css
 } from "lit-element";
 import { connect } from "pwa-helpers/connect-mixin.js";
 import { updateMetadata } from "pwa-helpers/metadata.js";
@@ -19,6 +20,11 @@ import * as fromRouter from "./router";
 
 @customElement("calrum-root")
 export class CalrumRootComponent extends connect(store)(LitElement) {
+  static styles = css`
+  main{
+    height:100%;
+  }
+  `;
   @property({ type: String })
   appTitle = "Calrum";
   @property({ type: String })
