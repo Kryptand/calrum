@@ -1,123 +1,36 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  TemplateResult,
-  property,
-  eventOptions
-} from "lit-element";
-import "@polymer/iron-icons/iron-icons";
 import "@polymer/iron-icon/iron-icon";
-import "@vaadin/vaadin-text-field/vaadin-number-field";
+import "@polymer/iron-icons/iron-icons";
 import "@vaadin/vaadin-select/vaadin-select";
-import moment from "moment";
+import "@vaadin/vaadin-text-field/vaadin-number-field";
 import {
-  getDayName,
-  renderCalendarRow,
-  getMonthNames
-} from "../utility/date";
+  customElement,
+  eventOptions,
+  html,
+  LitElement,
+  property,
+  TemplateResult
+} from "lit-element";
+import { renderCalendarRow } from "../utility/date";
+import { getWeekDaysForWeek } from "../utility/date-manipulation/week";
+import { getMonthNamesInYear } from "./../utility/date-manipulation/month";
+import { style } from "./month.styles";
+
 @customElement("calrum-month")
 export class MonthComponent extends LitElement {
-  static styles = css`
-    .day-of-week {
-      display: flex;
-      width: 100%;
-    }
-    html,
-    body,
-    .grid-container {
-      height: calc(100vh - 55px);
-      margin: 0;
-    }
-
-    .grid-container * {
-     
-      border: 1px solid red;
-      position: relative;
-    }
-    .month-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows:  1fr  1fr  1fr 1fr 1fr 1fr  1fr;
-      grid-template-areas: "weeknames weeknames weeknames weeknames weeknames weeknames weeknames" "first-week first-week first-week first-week first-week first-week first-week" "second-week second-week second-week second-week second-week second-week second-week" "third-week third-week third-week third-week third-week third-week third-week" "fourth-week fourth-week fourth-week fourth-week fourth-week fourth-week fourth-week" "fifth-week fifth-week fifth-week fifth-week fifth-week fifth-week fifth-week" "sixth-week sixth-week sixth-week sixth-week sixth-week sixth-week sixth-week";
-    }
-
-    .weeknames {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: 1fr;
-      grid-template-areas: ". . . . . . .";
-      grid-area: weeknames;
-    }
-
-    .first-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: first-week;
-    }
-
-    .second-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: second-week;
-    }
-
-    .third-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: third-week;
-    }
-
-    .fourth-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: fourth-week;
-    }
-
-    .fifth-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: fifth-week;
-    }
-    
-    .sixth-week {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: ;
-      grid-template-areas: ". . . . . . .";
-      grid-area: sixth-week;
-    }
-    #year {
-      margin: 5px;
-    }
-  `;
-  @property({ type: Number }) currentYear = moment().year();
-  @property({ type: Number }) currentMonth = moment().month();
+  static get styles() {
+    return [style];
+  }
+  @property({ type: Number }) currentYear = new Date().getFullYear();
+  @property({ type: Number }) currentMonth = new Date().getMonth();
 
   @eventOptions({ capture: false, passive: true })
   private yearChanged(e: any) {
-    this.currentYear = e.target.value;
+    this.currentYear ==e.target.value;
   }
   @eventOptions({ capture: false, passive: true })
   private monthChanged(e: any) {
     console.debug(e);
-    this.currentMonth = e.target.value;
+    this.currentMonth = new Date(e.target.value).getMonth();
   }
   protected render(): TemplateResult {
     return html`
@@ -130,20 +43,22 @@ export class MonthComponent extends LitElement {
         ></vaadin-number-field>
         <vaadin-select
           @value-changed="${this.monthChanged}"
-          value="${moment()
-            .month(this.currentMonth)
-            .format("MMMM")}"
+          value="${this.currentMonth+1}"
         >
           <template>
             <vaadin-list-box>
-              ${getMonthNames()}
+              ${getMonthNamesInYear().map(
+                (x,index) => html`
+                  <vaadin-item value="${index+1}" label="${x}">${x}</vaadin-item>
+                `
+              )}
             </vaadin-list-box>
           </template>
         </vaadin-select>
       </div>
       <div class="grid-container">
         <div class="weeknames">
-          ${getDayName()}
+          ${getWeekDaysForWeek().map(x=>html`<div>${x}</div>`)}
         </div>
         ${renderCalendarRow(this.currentMonth, this.currentYear)}
       </div>

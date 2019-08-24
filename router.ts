@@ -16,8 +16,8 @@ export function init(outlet: HTMLElement | null) {
       {
         path: Routes.Home,
         component: 'calrum-home',
-        action: () => {
-          import('./src/home/home');
+        action: async ()=> {
+        await import('./src/home/home');
         }
       },
      

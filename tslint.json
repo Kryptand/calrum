@@ -1,3 +1,19 @@
 {
-  "extends": ["@polymer/tools-common/tslint.json"]
+  "extends": ["@polymer/tools-common/tslint.json"],
+  "rules": {
+    "max-line-length": {
+        "options": [120]
+    },
+    "new-parens": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "prefer-const": [true, {"destructuring": "all"}],
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": false,
+    "no-console": {
+        "severity": "warning",
+        "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    }
+},
+ 
 }
