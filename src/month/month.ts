@@ -25,11 +25,10 @@ export class MonthComponent extends LitElement {
 
   @eventOptions({ capture: false, passive: true })
   private yearChanged(e: any) {
-    this.currentYear ==e.target.value;
+    this.currentYear=Number.parseInt(e.target.value);
   }
   @eventOptions({ capture: false, passive: true })
   private monthChanged(e: any) {
-    console.debug(e);
     this.currentMonth = new Date(e.target.value).getMonth();
   }
   protected render(): TemplateResult {
