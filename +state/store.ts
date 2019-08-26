@@ -17,12 +17,22 @@ import thunk, { ThunkMiddleware } from "redux-thunk";
 import { lazyReducerEnhancer } from "pwa-helpers/lazy-reducer-enhancer.js";
 import { AppAction } from "./actions";
 import app, { AppState } from "./reducers";
+import { persistReducer, persistStore } from "redux-persist";
+import * as lf from "localforage";
+import { EventState } from "./event/event.reducer";
+import { EventActionUnion } from "./event/event.action";
+
+lf.config({
+  name: "Calrum",
+  storeName: "main"
+});
 // Overall state extends static states and partials lazy states.
 export interface RootState {
   app?: AppState;
+  event:EventState;
 }
 
-export type RootAction = AppAction;
+export type RootAction = AppAction|EventActionUnion;
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.
@@ -37,15 +47,27 @@ const devCompose: <Ext0, Ext1, StateExt0, StateExt1>(
 // that you can dispatch async actions). See the "Redux and state management"
 // section of the wiki for more details:
 // https://github.com/Polymer/pwa-starter-kit/wiki/4.-Redux-and-state-management
+
+const persistConfig = {
+  key: "primary",
+  debounce: 500,
+  storage: lf
+};
+
+const persistedReducer = persistReducer(persistConfig, app);
+
 export const store = createStore(
   state => state as Reducer<RootState, RootAction>,
+  persistedReducer,
   devCompose(
     lazyReducerEnhancer(combineReducers),
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)
   )
 );
-const appReducer=app as any;
+export const persistor = persistStore(store);
+
+const appReducer = app as any;
 // Initially loaded reducers.
 store.addReducers({
-  app:appReducer
+  app: appReducer
 });

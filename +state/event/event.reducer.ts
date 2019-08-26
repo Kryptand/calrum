@@ -1,7 +1,6 @@
 import { Reducer } from "redux";
 import { DateEvent } from './../../src/models/event';
 import { EventActionUnion, EVENT_ACTIONS } from "./event.action";
-import { persistentReducer } from 'redux-pouchdb-plus';
 export interface EventState {
   ids:number[];
   events: DateEvent[];
@@ -33,4 +32,4 @@ const eventReducer: Reducer<EventState, EventActionUnion> = (state = INITIAL_STA
   }
 };
 
-export const reducer=persistentReducer(eventReducer);
+export const reducer=(eventReducer);
