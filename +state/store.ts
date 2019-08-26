@@ -29,10 +29,10 @@ localForage.config({
 // Overall state extends static states and partials lazy states.
 export interface RootState {
   app?: AppState;
-  event:EventState;
+  event: EventState;
 }
 
-export type RootAction = AppAction|EventActionUnion;
+export type RootAction = AppAction | EventActionUnion;
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.
@@ -58,7 +58,7 @@ const persistedReducer = persistReducer(persistConfig, app);
 
 export const store = createStore(
   state => state as Reducer<RootState, RootAction>,
-  persistedReducer,
+  compose(persistedReducer),
   devCompose(
     lazyReducerEnhancer(combineReducers),
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)

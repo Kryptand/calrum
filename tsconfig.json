@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "typeRoots": [ "@types","node_modules/@types"]
-  },
+  },, "src/index.js"
   "include": ["src/**/*.ts","+state/**/*.ts","main.ts","config/**/*","@types/**/*"],
   "exclude": []
 }
