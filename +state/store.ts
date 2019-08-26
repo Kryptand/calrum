@@ -18,11 +18,11 @@ import { lazyReducerEnhancer } from "pwa-helpers/lazy-reducer-enhancer.js";
 import { AppAction } from "./actions";
 import app, { AppState } from "./reducers";
 import { persistReducer, persistStore } from "redux-persist";
-import * as lf from "localforage";
+import localForage from "localforage";
 import { EventState } from "./event/event.reducer";
 import { EventActionUnion } from "./event/event.action";
 
-lf.config({
+localForage.config({
   name: "Calrum",
   storeName: "main"
 });
@@ -51,7 +51,7 @@ const devCompose: <Ext0, Ext1, StateExt0, StateExt1>(
 const persistConfig = {
   key: "primary",
   debounce: 500,
-  storage: lf
+  storage: localForage
 };
 
 const persistedReducer = persistReducer(persistConfig, app);

@@ -3,8 +3,8 @@ import thunk from "redux-thunk";
 import { lazyReducerEnhancer } from "pwa-helpers/lazy-reducer-enhancer.js";
 import app from "./reducers";
 import { persistReducer, persistStore } from "redux-persist";
-import * as lf from "localforage";
-lf.config({
+import localForage from "localforage";
+localForage.config({
     name: "Calrum",
     storeName: "main"
 });
@@ -19,7 +19,7 @@ const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
     key: "primary",
     debounce: 500,
-    storage: lf
+    storage: localForage
 };
 const persistedReducer = persistReducer(persistConfig, app);
 export const store = createStore(state => state, persistedReducer, devCompose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk)));
