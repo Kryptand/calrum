@@ -32,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      'src/assets/**',
+      {from:'src/assets/**',to:'assets/'},
       'node_modules/@webcomponents/webcomponentsjs/**',
       'manifest.json'
     ]),

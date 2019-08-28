@@ -2,11 +2,20 @@ import "@polymer/iron-icon/iron-icon";
 import "@polymer/iron-icons/iron-icons";
 import "@vaadin/vaadin-select/vaadin-select";
 import "@vaadin/vaadin-text-field/vaadin-number-field";
-import { customElement, eventOptions, html, LitElement, property, TemplateResult } from "lit-element";
+import {
+  customElement,
+  eventOptions,
+  html,
+  LitElement,
+  property,
+  TemplateResult
+} from "lit-element";
 import { renderCalendarRow } from "../utility/date";
 import { getWeekDaysForWeek } from "../utility/date-manipulation/week";
 import { getMonthNamesInYear } from "./../utility/date-manipulation/month";
 import { style } from "./month.styles";
+import "../event/create-event.form";
+import { DateEvent } from "./../models/event";
 @customElement("calrum-month")
 export class MonthComponent extends LitElement {
   static get styles() {
@@ -25,6 +34,10 @@ export class MonthComponent extends LitElement {
   }
   protected render(): TemplateResult {
     return html`
+
+        <calrum-event-form
+        @submitEvent="${(event: DateEvent) => console.debug(event)}"
+      ></calrum-event-form>
       <div class="month-indicator">
         <vaadin-number-field
           @change="${this.yearChanged}"
@@ -60,6 +73,7 @@ export class MonthComponent extends LitElement {
         </div>
         ${renderCalendarRow(this.currentMonth, this.currentYear)}
       </div>
+
     `;
   }
 }

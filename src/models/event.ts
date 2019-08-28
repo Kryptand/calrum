@@ -16,17 +16,19 @@ export class DateIdentifier {
     return this.identifier + "";
   }
 }
-export interface DateEvent {
-  id:number;
-  date: Date;
-  label: string;
+export class DateEvent {
+  constructor(){}
+  id:number=new DateIdentifier(new Date(),'day').identifier as number;
+  date: Date=new Date();
+  label?: string ;
 }
 export type EventGroup =Map<number,DateEvent[]>;
 export const eventToEventGroupArrFactory=(precision:IdentifierPrecision='day',...events:DateEvent[]):EventGroup=>{
    return events.reduce((map,item)=>{
-        const identifier=new DateIdentifier(item.date,precision);
-        if (map.has(identifier)) map.get(identifier).push(item);
-        else map.set(identifier, [item]);
-        return map;
+    const identifier=new DateIdentifier(item.date,precision);
+    if (map.has(identifier)) map.get(identifier).push(item);
+    else map.set(identifier, [item]);
+    return map;
+       
     },new Map())
 }

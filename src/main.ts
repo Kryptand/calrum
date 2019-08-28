@@ -43,7 +43,7 @@ export class CalrumRootComponent extends connect(store)(LitElement) {
 
   protected updated(changedProps: PropertyValues) {
     if (changedProps.has("page")) {
-      const pageTitle = this.appTitle + " - " + this.page;
+      const pageTitle = this.appTitle;
       updateMetadata({
         title: pageTitle,
         description: pageTitle
