@@ -1,8 +1,8 @@
 {
   "entrypoint": "index.html",
-  "shell": "main.js",
+  "shell": "src/main.js",
   "sources": [
-    "assets/**/*"
+    "src/assets/**/*"
   ],
   "extraDependencies": [
     "manifest.json",

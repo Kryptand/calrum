@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { DateEvent } from "../../src/models/event";
+import { DateEvent } from "../../models/event";
 export const enum EVENT_ACTIONS{
     AddEvent="[Event] Add",
     DeleteEvent="[Event] Delete",

@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-  
-  entry:"./main.ts",
   devServer: {
     historyApiFallback: true
   },
@@ -34,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      'images/**',
+      'src/assets/**',
       'node_modules/@webcomponents/webcomponentsjs/**',
       'manifest.json'
     ]),

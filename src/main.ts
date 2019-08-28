@@ -11,11 +11,9 @@ import {
 } from "lit-element";
 import { connect } from "pwa-helpers/connect-mixin.js";
 import { updateMetadata } from "pwa-helpers/metadata.js";
-import { installOfflineWatcher } from "pwa-helpers/network.js";
 
-import {  updateOffline } from "./+state/actions";
-import { RootState, store } from "./+state/store";
-import "./src/skeleton/skeleton";
+import {  store } from "./+state/store";
+import "./skeleton/skeleton";
 import * as fromRouter from "./router";
 
 @customElement("calrum-root")
@@ -41,7 +39,6 @@ export class CalrumRootComponent extends connect(store)(LitElement) {
     if (this.shadowRoot !== null) {
       fromRouter.init(this.shadowRoot.querySelector("main"));
     }
-    installOfflineWatcher(offline => store.dispatch(updateOffline(offline)));
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -54,11 +51,6 @@ export class CalrumRootComponent extends connect(store)(LitElement) {
     }
   }
 
-  stateChanged(state: RootState) {
-    console.debug(state);
-    this.page = state.app!.page;
-    this.offline = state.app!.offline;
-  }
 
   protected render(): TemplateResult {
     return html`

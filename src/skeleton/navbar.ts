@@ -9,8 +9,8 @@ import {
 import "@polymer/iron-icons/iron-icons";
 import "@polymer/iron-icon/iron-icon";
 import { connect } from "pwa-helpers/connect-mixin";
-import { store, RootState } from "../../+state/store";
-import { Routes } from "../../config/routes";
+import { Routes } from "../config/routes";
+import { store } from "../+state/store";
 
 const isCurrentPage: any=(location:string,currentLocation:string)=>{
   return location===currentLocation;
@@ -38,9 +38,7 @@ export class NavbarComponent extends connect(store)(LitElement){
       color: var(--calrum-primary-contrast);
     }
   `;
-  stateChanged(state: RootState) {
-    this.page = state.app!.page;
-  }
+
   protected render(): TemplateResult {
     return html`
       <a href="/${Routes.Home}">

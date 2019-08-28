@@ -5,22 +5,20 @@ declare global {
   }
 }
 
-import {
-  createStore,
-  compose,
-  applyMiddleware,
-  combineReducers,
-  Reducer,
-  StoreEnhancer
-} from "redux";
-import thunk, { ThunkMiddleware } from "redux-thunk";
-import { lazyReducerEnhancer } from "pwa-helpers/lazy-reducer-enhancer.js";
-import { AppAction } from "./actions";
-import app, { AppState } from "./reducers";
-import { persistReducer, persistStore } from "redux-persist";
+import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
 import localForage from "localforage";
-import { EventState } from "./event/event.reducer";
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+  StoreEnhancer,
+  combineReducers
+} from "redux";
+import { PersistConfig,  persistReducer } from "redux-persist";
+import thunk, { ThunkMiddleware } from "redux-thunk";
 import { EventActionUnion } from "./event/event.action";
+import { EventState, eventReducer } from "./event/event.reducer";
+import { AppState, appReducer } from "./reducers";
 
 localForage.config({
   name: "Calrum",
@@ -32,7 +30,7 @@ export interface RootState {
   event: EventState;
 }
 
-export type RootAction = AppAction | EventActionUnion;
+export type RootAction = EventActionUnion;
 
 // Sets up a Chrome extension for time travel debugging.
 // See https://github.com/zalmoxisus/redux-devtools-extension for more information.
@@ -52,22 +50,16 @@ const persistConfig = {
   key: "primary",
   debounce: 500,
   storage: localForage
-};
+} as PersistConfig;
 
-const persistedReducer = persistReducer(persistConfig, app);
-
+const rootReducer = combineReducers({
+  app: appReducer,
+  event: persistReducer(persistConfig, eventReducer)
+});
 export const store = createStore(
-  state => state as Reducer<RootState, RootAction>,
-  compose(persistedReducer),
+  rootReducer,
   devCompose(
     lazyReducerEnhancer(combineReducers),
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)
   )
 );
-export const persistor = persistStore(store);
-
-const appReducer = app as any;
-// Initially loaded reducers.
-store.addReducers({
-  app: appReducer
-});

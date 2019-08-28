@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
-import { DateEvent } from './../../src/models/event';
 import { EventActionUnion, EVENT_ACTIONS } from "./event.action";
+import { DateEvent } from "../../models/event";
 export interface EventState {
   ids:number[];
   events: DateEvent[];
@@ -11,7 +11,7 @@ const INITIAL_STATE: EventState = {
     events:[]
 };
 
-const eventReducer: Reducer<EventState, EventActionUnion> = (state = INITIAL_STATE, action) => {
+export const eventReducer: Reducer<EventState, EventActionUnion> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case EVENT_ACTIONS.AddEvent:
       return {
@@ -32,4 +32,3 @@ const eventReducer: Reducer<EventState, EventActionUnion> = (state = INITIAL_STA
   }
 };
 
-export const reducer=(eventReducer);

@@ -11,13 +11,13 @@ export const navigateTo = (url: any) => {
   );
 };
 export function init(outlet: HTMLElement | null) {
-    const router = new Router(outlet);
+    const router = new Router(outlet,{});
     router.setRoutes([
       {
         path: Routes.Home,
         component: 'calrum-home',
         action: async ()=> {
-        await import('./src/home/home');
+        await import('./home/home');
         }
       },
      
@@ -25,21 +25,21 @@ export function init(outlet: HTMLElement | null) {
         path: Routes.DayList,
         component: 'calrum-day-list',
         action: () => {
-          import('./src/day-list/day-list');
+          import('./day-list/day-list');
         }
       },
       {
         path: Routes.Month,
         component: 'calrum-month',
         action: () => {
-          import('./src/month/month');
+          import('./month/month');
         }
       },
       {
         path: Routes.Week,
         component: 'calrum-week',
         action: () => {
-          import('./src/week/week');
+          import('./week/week');
         }
       },
       {
@@ -50,7 +50,7 @@ export function init(outlet: HTMLElement | null) {
         path: '(.*)+',
         component: 'calrum-not-found',
         action: () => {
-          import('./src/not-found/not-found');
+          import('./not-found/not-found');
         }
 
       }
