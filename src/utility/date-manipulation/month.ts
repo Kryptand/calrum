@@ -6,7 +6,6 @@ export const getMonthNameForNumber = (
   objDate.setDate(1);
   objDate.setMonth(month);
   objDate.toLocaleString(locale, { month: "long" });
- console.debug(objDate.toLocaleString(locale, { month: "long" }));
   return objDate.toLocaleString(locale, { month: "long" });
 };
 

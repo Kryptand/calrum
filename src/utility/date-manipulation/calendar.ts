@@ -60,7 +60,6 @@ export const generateCalendarArr = (
     }
     lines[w] = row;
   }
-
   if (opts.formatHeader) lines.unshift(headers);
 
   return lines;

@@ -5,7 +5,7 @@ declare global {
   }
 }
 
-import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
+import { lazyReducerEnhancer } from "pwa-helpers/lazy-reducer-enhancer.js";
 import localForage from "localforage";
 import {
   applyMiddleware,
@@ -14,7 +14,7 @@ import {
   StoreEnhancer,
   combineReducers
 } from "redux";
-import { PersistConfig,  persistReducer } from "redux-persist";
+import { PersistConfig, persistReducer, persistStore } from "redux-persist";
 import thunk, { ThunkMiddleware } from "redux-thunk";
 import { EventActionUnion } from "./event/event.action";
 import { EventState, eventReducer } from "./event/event.reducer";
@@ -63,3 +63,4 @@ export const store = createStore(
     applyMiddleware(thunk as ThunkMiddleware<RootState, RootAction>)
   )
 );
+persistStore(store);

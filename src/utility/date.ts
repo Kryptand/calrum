@@ -1,14 +1,14 @@
 import { html } from "lit-element";
 import { generateCalendarArr } from "./date-manipulation/calendar";
+import '../day-container/day-container';
 export const renderCalendarRow = (month: number, year: number) => {
-  console.debug(month, year);
-  return generateCalendarArr(year, month,{weekStartDay:1,   formatDate: (date:Date) =>date.getDate(), formatSiblingMonthDate: () => '  '}).map(
+  return generateCalendarArr(year, month,{weekStartDay:1,   formatDate: (date:Date) =>date}).map(
     (x,index) => html`
       <div class="${getNameForNumberUntilFive(index+1)}-week">
         ${x.map(
           (y:any) =>
             html`
-              <div class="day ${typeof y!=='number'?'empty':'filled'}">${y}</div>
+              <div class="day ${typeof y!=='number'?'empty':'filled'}"><calrum-day-container date="${new Date(y)}"></calrum-day-container></div>
             `
         )}
       </div>
@@ -17,7 +17,6 @@ export const renderCalendarRow = (month: number, year: number) => {
 };
 
 export const getNameForNumberUntilFive = (num: number): string => {
-  console.debug(num);
   switch (num) {
     case 1:
       return "first";
